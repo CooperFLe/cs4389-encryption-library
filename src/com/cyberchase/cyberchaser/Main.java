@@ -1,4 +1,4 @@
-package com.cyberchase.encryption;
+package com.cyberchase.cyberchaser;
 
 public class Main {
 
