@@ -32,7 +32,7 @@ public class AESEncryptor implements Encryptor {
         }
     }
 
-    public static String encrypt(String strToEncrypt, String secret)
+    public static String encryptFile(String strToEncrypt, String secret)
     {
         try
         {
@@ -48,7 +48,7 @@ public class AESEncryptor implements Encryptor {
         return null;
     }
 
-    public static String decrypt(String strToDecrypt, String secret)
+    public static String decryptFile(String strToDecrypt, String secret)
     {
         try
         {
