@@ -1,5 +1,7 @@
 package com.cyberchase.cyberchaser;
 
+import com.cyberchase.cyberchaser.encryption.AESEncryptor;
+
 import java.lang.String;
 
 public class Main {
@@ -8,8 +10,8 @@ public class Main {
         final String secretKey = "ssshhhhhhhhhhh!!!!";
 
         String originalString = "howtodoinjava.com";
-        String encryptedString = AES.encrypt(originalString, secretKey) ;
-        String decryptedString = AES.decrypt(encryptedString, secretKey) ;
+        String encryptedString = AESEncryptor.encryptFile(originalString, secretKey);
+        String decryptedString = AESEncryptor.decryptFile(encryptedString, secretKey);
 
         System.out.println(originalString);
         System.out.println(encryptedString);
