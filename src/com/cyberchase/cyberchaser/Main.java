@@ -8,25 +8,25 @@ import java.lang.String;
 public class Main {
 
     public static void main(String[] args) {
-        final String secretKey = "ssshhhhhhhhhhh!!!!";
+        final String privatekey = "superSecretKey";
 
-        String originalString = "howtodoinjava.com";
-        String encryptedString = AESEncryptor.encryptFile(originalString, secretKey);
-        String decryptedString = AESEncryptor.decryptFile(encryptedString, secretKey);
+        String original = "testMessage";
+        String encrypted = AESEncryptor.encryptFile(original, privatekey);
+        String decrypted = AESEncryptor.decryptFile(encrypted, privatekey);
         
         System.out.println("AES output: Original String, Encrypted String, Decrypted String");
-        System.out.println(originalString);
-        System.out.println(encryptedString);
-        System.out.println(decryptedString);
+        System.out.println(original);
+        System.out.println(encrypted);
+        System.out.println(decrypted);
 
-        originalString = "newteststring";
-        encryptedString = DESEncryptor.encryptFile(originalString, secretKey);
-        decryptedString = DESEncryptor.decryptFile(encryptedString, secretKey);
+        original = "newteststring";
+        encrypted = DESEncryptor.encryptFile(original, privatekey);
+        decrypted = DESEncryptor.decryptFile(encrypted, privatekey);
 
         System.out.println();
         System.out.println("DES output: Original String, Encrypted String, Decrypted String");
-        System.out.println(originalString);
-        System.out.println(encryptedString);
-        System.out.println(decryptedString);
+        System.out.println(original);
+        System.out.println(encrypted);
+        System.out.println(decrypted);
     }
 }
