@@ -1,27 +1,24 @@
 package com.cyberchase.cyberchaser.encryption;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Base64;
+import java.io.*;
+import java.security.*;
+import java.util.*;
 import javax.crypto.*;
-import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.spec.*;
 
 public abstract class DESEncryptor implements Encryptor{
 
-    private static SecretKeySpec secretKey;
-    private static byte[] key;
+    private static byte[] akey;
+    private static SecretKeySpec privatekey;
 
-    public static void setKey(String myKey)
-    {
-        MessageDigest sha = null;
+    public static void setKey(String bkey) {
+        MessageDigest foo = null;
         try {
-            key = myKey.getBytes("UTF-8");
-            sha = MessageDigest.getInstance("SHA-1");
-            key = sha.digest(key);
-            key = Arrays.copyOf(key, 8);
-            secretKey = new SecretKeySpec(key, "DES");
+            akey = bkey.getBytes("UTF-8");
+            foo = MessageDigest.getInstance("SHA-1");
+            akey = foo.digest(akey);
+            akey = Arrays.copyOf(akey, 8);
+            privatekey = new SecretKeySpec(akey, "DES");
         }
         catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -31,34 +28,31 @@ public abstract class DESEncryptor implements Encryptor{
         }
     }
 
-    public static String encryptFile(String strToEncrypt, String secret) {
-
+    public static String encryptFile(String stringencrypt, String priv) {
         try{
-            setKey(secret);
+            setKey(priv);
             Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            cipher.init(Cipher.ENCRYPT_MODE, privatekey);
 
-            return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
+            return Base64.getEncoder().encodeToString(cipher.doFinal(stringencrypt.getBytes("UTF-8")));
         }
         catch(Exception e){
-            System.out.println("Error while encrypting: " + e.toString());
+            System.out.println("Encrypting err: " + e.toString());
         }
-
         return null;
     }
 
-    public static String decryptFile(String strToDecrypt, String secret){
+    public static String decryptFile(String stringdecrypt, String priv) {
         try{
-            setKey(secret);
+            setKey(priv);
             Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            cipher.init(Cipher.DECRYPT_MODE, privatekey);
 
-            return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+            return new String(cipher.doFinal(Base64.getDecoder().decode(stringdecrypt)));
         }
         catch(Exception e){
-            System.out.println("Error while decrypting: " + e.toString());
+            System.out.println("Decrypting err: " + e.toString());
         }
-
         return null;
     }
 }
