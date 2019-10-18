@@ -7,14 +7,13 @@ import java.lang.String;
 public class Main {
 
     public static void main(String[] args) {
-        final String secretKey = "ssshhhhhhhhhhh!!!!";
 
-        String originalString = "howtodoinjava.com";
-        String encryptedString = AESEncryptor.encryptFile(originalString, secretKey);
-        String decryptedString = AESEncryptor.decryptFile(encryptedString, secretKey);
-
-        System.out.println(originalString);
-        System.out.println(encryptedString);
-        System.out.println(decryptedString);
+        final String secretKey = "verySecurePrivateKey";
+        String original = "testString";
+        String encrypted = AESEncryptor.encryptFile(original, secretKey);
+        String decrypted = AESEncryptor.decryptFile(encrypted, secretKey);
+        System.out.println(original);
+        System.out.println(encrypted);
+        System.out.println(decrypted);
     }
 }

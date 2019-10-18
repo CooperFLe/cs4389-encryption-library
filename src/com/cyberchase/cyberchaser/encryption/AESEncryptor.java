@@ -1,28 +1,24 @@
 package com.cyberchase.cyberchaser.encryption;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Base64;
-
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
+import java.io.*;
+import java.security.*;
+import java.util.*;
+import javax.crypto.*;
+import javax.crypto.spec.*;
 
 public abstract class AESEncryptor implements Encryptor {
 
-    private static SecretKeySpec secretKey;
-    private static byte[] key;
+    private static byte[] akey;
+    private static SecretKeySpec privatekey;
 
-    public static void setKey(String myKey)
-    {
-        MessageDigest sha = null;
+    public static void setKey(String bkey) {
+        MessageDigest foo = null;
         try {
-            key = myKey.getBytes("UTF-8");
-            sha = MessageDigest.getInstance("SHA-1");
-            key = sha.digest(key);
-            key = Arrays.copyOf(key, 16);
-            secretKey = new SecretKeySpec(key, "AES");
+            akey = bkey.getBytes("UTF-8");
+            foo = MessageDigest.getInstance("SHA-1");
+            akey = foo.digest(akey);
+            akey = Arrays.copyOf(akey, 16);
+            privatekey = new SecretKeySpec(akey, "AES");
         }
         catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -38,7 +34,7 @@ public abstract class AESEncryptor implements Encryptor {
         {
             setKey(secret);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            cipher.init(Cipher.ENCRYPT_MODE, privatekey);
             return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
         }
         catch (Exception e)
@@ -54,7 +50,7 @@ public abstract class AESEncryptor implements Encryptor {
         {
             setKey(secret);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            cipher.init(Cipher.DECRYPT_MODE, privatekey);
             return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
         }
         catch (Exception e)
