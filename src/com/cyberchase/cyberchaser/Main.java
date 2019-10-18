@@ -13,7 +13,8 @@ public class Main {
         String originalString = "howtodoinjava.com";
         String encryptedString = AESEncryptor.encryptFile(originalString, secretKey);
         String decryptedString = AESEncryptor.decryptFile(encryptedString, secretKey);
-
+        
+        System.out.println("AES output: Original String, Encrypted String, Decrypted String");
         System.out.println(originalString);
         System.out.println(encryptedString);
         System.out.println(decryptedString);
@@ -22,6 +23,8 @@ public class Main {
         encryptedString = DESEncryptor.encryptFile(originalString, secretKey);
         decryptedString = DESEncryptor.decryptFile(encryptedString, secretKey);
 
+        System.out.println();
+        System.out.println("DES output: Original String, Encrypted String, Decrypted String");
         System.out.println(originalString);
         System.out.println(encryptedString);
         System.out.println(decryptedString);
