@@ -1,4 +1,4 @@
-package com.cyberchase.cyberchaser.encryption;
+package com.cyberchase.cyberchaser.service;
 
 import java.io.File;
 
