@@ -7,4 +7,4 @@ Just make sure you have a Java JDK and IntelliJ. Depending on your JDK version y
 
 Just building the project and running is sufficient for executeing the code.
 
-We are planning to add a web application for the code using a Spring REST API.
+Spring Boot was used to create a REST API for it.
