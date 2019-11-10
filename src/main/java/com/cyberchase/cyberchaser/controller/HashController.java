@@ -17,7 +17,7 @@ public class HashController {
 
     @RequestMapping("/bcrypt/verify/{value}/{hash}")
     public ResponseEntity<Boolean> bcryptVerify(@PathVariable("value") String value, @PathVariable("hash") String hash) {
-        return ResponseEntity.ok(BcryptService.checkHash(value, null, hash));
+        return ResponseEntity.ok(BcryptService.checkHash(value, hash));
     }
     
 }

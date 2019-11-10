@@ -8,7 +8,7 @@ public class BcryptService {
         return BCrypt.hashpw(secret, BCrypt.gensalt());
     }
 
-    public static boolean checkHash(String secret, String salt, String hash) {
+    public static boolean checkHash(String secret, String hash) {
         return BCrypt.checkpw(secret, hash);
     }
 }
