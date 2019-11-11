@@ -1,4 +1,4 @@
-package com.cyberchase.cyberchaser.encryption;
+package com.cyberchase.cyberchaser.service;
 
 import java.io.*;
 import java.security.*;
@@ -6,7 +6,7 @@ import java.util.*;
 import javax.crypto.*;
 import javax.crypto.spec.*;
 
-public abstract class AESEncryptor implements Encryptor {
+public abstract class AESService {
 
     private static byte[] akey;
     private static SecretKeySpec privatekey;

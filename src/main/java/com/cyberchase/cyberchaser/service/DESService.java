@@ -1,4 +1,4 @@
-package com.cyberchase.cyberchaser.encryption;
+package com.cyberchase.cyberchaser.service;
 
 import java.io.*;
 import java.security.*;
@@ -6,7 +6,7 @@ import java.util.*;
 import javax.crypto.*;
 import javax.crypto.spec.*;
 
-public abstract class DESEncryptor implements Encryptor{
+public abstract class DESService {
 
     private static byte[] akey;
     private static SecretKeySpec privatekey;
