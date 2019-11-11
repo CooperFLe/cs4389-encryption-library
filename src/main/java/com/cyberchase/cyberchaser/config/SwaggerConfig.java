@@ -19,7 +19,8 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.cyberchase.cyberchaser.controller"))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .apiInfo(getApiInfo());
     }
 
     public ApiInfo getApiInfo(){
