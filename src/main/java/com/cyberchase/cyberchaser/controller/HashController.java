@@ -2,7 +2,7 @@ package com.cyberchase.cyberchaser.controller;
 
 import com.cyberchase.cyberchaser.service.BcryptService;
 import com.cyberchase.cyberchaser.service.MD5Service;
-import com.cyberchase.cyberchaser.service.Sha512;
+import com.cyberchase.cyberchaser.service.Sha512Service;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,12 +34,12 @@ public class HashController {
 
     @RequestMapping("/Sha512/{hash}/{salt}")
     public String sha512Hash(@PathVariable("salt") String salt, @PathVariable("hash") String value) {
-        return Sha512.getHash(value, salt.getBytes());
+        return Sha512Service.getHash(value, salt.getBytes());
     }
 
     @RequestMapping("/Sha512/verify/{value}/{salt}/{hash}")
     public boolean sha512Check(@PathVariable("value") String value, @PathVariable("salt") String salt, @PathVariable("hash") String hash) {
-        return Sha512.checkHash(value, salt, hash);
+        return Sha512Service.checkHash(value, salt, hash);
     }
     
 }
