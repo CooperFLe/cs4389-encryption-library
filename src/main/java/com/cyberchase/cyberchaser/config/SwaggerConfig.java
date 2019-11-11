@@ -9,7 +9,6 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-import java.util.Collections;
 
 @Configuration
 @EnableSwagger2
@@ -25,20 +24,10 @@ public class SwaggerConfig {
 
     public ApiInfo getApiInfo(){
         return new ApiInfoBuilder()
-                .build();
-//                .apiInfo(apiInfo());
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfo(
-                "Cyberchaser Encryption/Decryption Tool",
-                "For CS 4389.001",
-                "API TOS",
-                null,
-                null,
-                null,
-                null,
-                Collections.emptyList());
+            .title("Cyberchaser Encryption/Hashing Tool")
+            .description("For CS 4389.001")
+            .version("1.0.0")
+            .build();
     }
 }
 
