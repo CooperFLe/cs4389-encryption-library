@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: spring-boot-file-upload
+  servlet:
+    multipart:
+      enabled: false
+      max-file-size: 10MB
+server:
+  servlet:
+    contextPath: /spring-boot-file-upload
+  port: 8090
+logging:
+  level:
+    ROOT: DEBUG
