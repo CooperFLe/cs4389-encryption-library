@@ -6,6 +6,8 @@ import java.util.*;
 import javax.crypto.*;
 import javax.crypto.spec.*;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public abstract class DESService {
 
     private static byte[] akey;
@@ -28,7 +30,35 @@ public abstract class DESService {
         }
     }
 
-    public static String encryptFile(String stringencrypt, String priv) {
+    public static String encryptFile(MultipartFile file, String priv) {
+        try{
+            setKey(priv);
+            Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, privatekey);
+
+            return Base64.getEncoder().encodeToString(cipher.doFinal(file.getBytes()));
+        }
+        catch(Exception e){
+            System.out.println("Encrypting err: " + e.toString());
+        }
+        return null;
+    }
+
+    public static String decryptFile(MultipartFile file, String priv) {
+        try{
+            setKey(priv);
+            Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
+            cipher.init(Cipher.DECRYPT_MODE, privatekey);
+
+            return new String(cipher.doFinal(Base64.getDecoder().decode(file.getBytes())));
+        }
+        catch(Exception e){
+            System.out.println("Decrypting err: " + e.toString());
+        }
+        return null;
+    }
+
+    public static String encryptString(String stringencrypt, String priv) {
         try{
             setKey(priv);
             Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
@@ -42,7 +72,7 @@ public abstract class DESService {
         return null;
     }
 
-    public static String decryptFile(String stringdecrypt, String priv) {
+    public static String decryptString(String stringdecrypt, String priv) {
         try{
             setKey(priv);
             Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
@@ -55,4 +85,5 @@ public abstract class DESService {
         }
         return null;
     }
+
 }

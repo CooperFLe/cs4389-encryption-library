@@ -49,13 +49,31 @@ public class EncryptionController {
 
     @RequestMapping(value = "/des/enc/{key}/{value}", method = RequestMethod.POST)
     public String desEncryption(@PathVariable("key") String key, @PathVariable("value") String value) {
-        return DESService.encryptFile(value, key);
+        return DESService.encryptString(value, key);
     }
 
     @RequestMapping(value = "/des/dec/{key}/{value}", method = RequestMethod.POST)
     public String desDecryption(@PathVariable("key") String key, @PathVariable("value") String value) {
-        return DESService.decryptFile(value, key);
+        return DESService.decryptString(value, key);
     }
+
+    @RequestMapping(value = "/des/enc/file/{key}", method = RequestMethod.POST)
+    public String desEncryptFile(
+            @ApiParam(name = "file", value = "Select the file to Upload", required = true)
+            @RequestPart("file") MultipartFile file,
+            @PathVariable("key") String key) {
+        return DESService.encryptFile(file, key);
+    }
+
+    @RequestMapping(value = "/des/dec/file/{key}", method = RequestMethod.POST)
+    public String desDecryptFile(
+            @ApiParam(name = "file", value = "Select the file to Upload", required = true)
+            @RequestPart("file") MultipartFile file,
+            @PathVariable("key") String key)
+    {
+        return DESService.decryptFile(file, key);
+    }
+
 
     @RequestMapping(value = "rsa/enc/{value}", method = RequestMethod.POST)
     public RSAResult rsaEncryption(@PathVariable("value") String value){
