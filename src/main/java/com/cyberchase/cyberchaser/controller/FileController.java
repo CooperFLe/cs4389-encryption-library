@@ -1,13 +1,8 @@
 package com.cyberchase.cyberchaser.controller;
 
 import com.cyberchase.cyberchaser.service.AWSService;
-
-import javax.annotation.PostConstruct;
-
-import com.cyberchase.cyberchaser.config.AWSConfig;
 import com.cyberchase.cyberchaser.model.AWSPayload;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
