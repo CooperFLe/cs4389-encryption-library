@@ -6,6 +6,8 @@ import java.util.*;
 import javax.crypto.*;
 import javax.crypto.spec.*;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public abstract class AESService {
 
     private static byte[] akey;
@@ -28,13 +30,27 @@ public abstract class AESService {
         }
     }
 
-    public static String encryptFile(String stringencrypt, String priv)
+    public static String encryptFile(MultipartFile file, String priv)
     {
         try {
             setKey(priv);
             Cipher ciph = Cipher.getInstance("AES/ECB/PKCS5Padding");
             ciph.init(Cipher.ENCRYPT_MODE, privatekey);
-            return Base64.getEncoder().encodeToString(ciph.doFinal(stringencrypt.getBytes("UTF-8")));
+            return Base64.getEncoder().encodeToString(ciph.doFinal(file.getBytes()));
+        }
+        catch (Exception e) {
+            System.out.println("Encrypting err: " + e.toString());
+        }
+        return null;
+    }
+
+    public static String encryptString(String plaintext, String priv)
+    {
+        try {
+            setKey(priv);
+            Cipher ciph = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            ciph.init(Cipher.ENCRYPT_MODE, privatekey);
+            return Base64.getEncoder().encodeToString(ciph.doFinal(plaintext.getBytes("UTF-8")));
         }
         catch (Exception e) {
             System.out.println("Encrypting err: " + e.toString());
