@@ -5,11 +5,13 @@ import com.amazonaws.SdkClientException;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class AWSService {
     private static String bucketName = "cyberchaser.com";
@@ -24,7 +26,12 @@ public class AWSService {
                     .withRegion(region)
                     .build();
             // Upload a text string as a new object.
-            s3Client.putObject(bucketName, fileName, new String(contents));
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentType("plain/text");
+            PutObjectRequest request = new PutObjectRequest(bucketName, fileName, new ByteArrayInputStream(contents), metadata)
+                .withCannedAcl(CannedAccessControlList.PublicRead);
+            request.setMetadata(metadata);
+            s3Client.putObject(request);
 
         } catch (AmazonServiceException e) {
             // The call was transmitted successfully, but Amazon S3 couldn't process 
@@ -37,18 +44,17 @@ public class AWSService {
         }
     }
 
-    public static void uploadFile(String fileName, File contents) throws IOException {
+    public static void uploadFile(String fileName, InputStream contents) throws IOException {
         try{
             AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
                     .withRegion(region)
                     .build();
 
             // Upload a file as a new object with ContentType and title specified.
-            PutObjectRequest request = new PutObjectRequest(bucketName, fileName, contents);
             ObjectMetadata metadata = new ObjectMetadata();
+            PutObjectRequest request = new PutObjectRequest(bucketName, fileName, contents, metadata)
+                .withCannedAcl(CannedAccessControlList.PublicRead);
             metadata.setContentType("plain/text");
-            metadata.addUserMetadata("x-amz-meta-title", "someTitle");
-            request.setMetadata(metadata);
             s3Client.putObject(request);
         }  catch (AmazonServiceException e) {
             // The call was transmitted successfully, but Amazon S3 couldn't process 
