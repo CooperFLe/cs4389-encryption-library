@@ -4,25 +4,47 @@ import com.cyberchase.cyberchaser.service.AESService;
 import com.cyberchase.cyberchaser.service.DESService;
 import com.cyberchase.cyberchaser.service.RSAService;
 import com.cyberchase.cyberchaser.model.RSAResult;
+
 import com.cyberchase.cyberchaser.model.RSAPayload;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 public class EncryptionController {
 
     @RequestMapping(value = "/aes/enc/{key}/{value}", method = RequestMethod.POST)
     public String aesEncryption(@PathVariable("key") String key, @PathVariable("value") String value) {
-        return AESService.encryptFile(value, key);
+        return AESService.encryptString(value, key);
     }
+
 
     @RequestMapping(value = "/aes/dec/{key}/{value}", method = RequestMethod.POST)
     public String aesDecryption(@PathVariable("key") String key, @PathVariable("value") String value) {
-        return AESService.decryptFile(value, key);
+        return AESService.decryptString(value, key);
+    }
+
+    @RequestMapping(value = "/aes/enc/file/{key}", method = RequestMethod.POST)
+    public String aesEncryptFile(
+            @ApiParam(name = "file", value = "Select the file to Upload", required = true)
+            @RequestPart("file") MultipartFile file,
+            @PathVariable("key") String key) {
+        return AESService.encryptFile(file, key);
+    }
+
+    @RequestMapping(value = "/aes/dec/file/{key}", method = RequestMethod.POST)
+    public String aesDecryptFile(
+        @ApiParam(name = "file", value = "Select the file to Upload", required = true)
+        @RequestPart("file") MultipartFile file,
+        @PathVariable("key") String key)
+    {
+        return AESService.decryptFile(file, key);
     }
 
     @RequestMapping(value = "/des/enc/{key}/{value}", method = RequestMethod.POST)
