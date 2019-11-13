@@ -4,22 +4,19 @@ import javax.crypto.Cipher;
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Arrays;
 import java.util.Base64;
 
 public class RSAService{
 
     private PublicKey publicKey;
     private PrivateKey privateKey;
-    private String base64PublicKey;
-    private String base64PrivateKey;
 
     public RSAService() {
         try{
             keyGenerator();
         }
         catch(Exception e){
-            //TODO: Handle exception
+            e.printStackTrace();
         }
     }
 
