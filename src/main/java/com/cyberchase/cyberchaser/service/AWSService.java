@@ -12,20 +12,17 @@ import java.io.File;
 import java.io.IOException;
 
 public class AWSService {
-
-    private static Regions clientRegion = Regions.US_EAST_2;
     private static String bucketName = "cyberchaser.com";
 
-    public static void uploadString(String fileName, byte[] contents) {
+    public static void uploadString(String fileName, byte[] contents, String region) {
         
 
         try {
             //This code expects that you have AWS credentials set up per:
             // https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html
             AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                    .withRegion(clientRegion)
+                    .withRegion(Regions.valueOf(region))
                     .build();
-
             // Upload a text string as a new object.
             s3Client.putObject(bucketName, fileName, new String(contents));
 
@@ -40,10 +37,10 @@ public class AWSService {
         }
     }
 
-    public static void uploadFile(String fileName, File contents) throws IOException {
+    public static void uploadFile(String fileName, File contents, String region) throws IOException {
         try{
             AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                    .withRegion(clientRegion)
+                    .withRegion(Regions.valueOf(region))
                     .build();
 
             // Upload a file as a new object with ContentType and title specified.
