@@ -1,6 +1,9 @@
 package com.cyberchase.cyberchaser.service;
 
 import javax.crypto.Cipher;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -112,4 +115,36 @@ public class RSAService{
     //     }
     //     return privateKey;
     // }
+
+    public String encryptFile(MultipartFile file){
+        try{
+            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Base64.getDecoder().decode(getPublicKey().getBytes()));
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            PublicKey publicKey = keyFactory.generatePublic(keySpec);
+
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            byte[] byteArr = file.getBytes();
+            byte[] result = (cipher.doFinal(byteArr));
+            return new String(Base64.getEncoder().encode(result));
+        }
+        catch(Exception e){
+            System.out.println("Encrypting err: " + e.toString());
+        }
+
+        return null;
+    }
+
+    public String decryptFile(MultipartFile file, String privateKey){
+        try{
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            cipher.init(Cipher.DECRYPT_MODE, fixPrivateKey(privateKey));
+            return new String(cipher.doFinal(Base64.getDecoder().decode(file.getBytes())));
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

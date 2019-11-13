@@ -4,6 +4,7 @@ import com.cyberchase.cyberchaser.service.AESService;
 import com.cyberchase.cyberchaser.service.DESService;
 import com.cyberchase.cyberchaser.service.RSAService;
 import com.cyberchase.cyberchaser.model.RSAResult;
+
 import com.cyberchase.cyberchaser.model.RSAPayload;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,22 +18,23 @@ public class EncryptionController {
 
     @RequestMapping(value = "/aes/enc/{key}/{value}", method = RequestMethod.POST)
     public String aesEncryption(@PathVariable("key") String key, @PathVariable("value") String value) {
-        return AESService.encryptFile(value, key);
+        return AESService.encryptString(value, key);
     }
+
 
     @RequestMapping(value = "/aes/dec/{key}/{value}", method = RequestMethod.POST)
     public String aesDecryption(@PathVariable("key") String key, @PathVariable("value") String value) {
-        return AESService.decryptFile(value, key);
+        return AESService.decryptString(value, key);
     }
 
     @RequestMapping(value = "/des/enc/{key}/{value}", method = RequestMethod.POST)
     public String desEncryption(@PathVariable("key") String key, @PathVariable("value") String value) {
-        return DESService.encryptFile(value, key);
+        return DESService.encryptString(value, key);
     }
 
     @RequestMapping(value = "/des/dec/{key}/{value}", method = RequestMethod.POST)
     public String desDecryption(@PathVariable("key") String key, @PathVariable("value") String value) {
-        return DESService.decryptFile(value, key);
+        return DESService.decryptString(value, key);
     }
 
     @RequestMapping(value = "rsa/enc/{value}", method = RequestMethod.POST)
