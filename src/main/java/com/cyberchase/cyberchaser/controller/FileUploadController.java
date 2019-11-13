@@ -1,4 +1,4 @@
-package com.cyberchase.cyberchaser.webservice;
+package com.cyberchase.cyberchaser.controller;
 
 
 import io.swagger.annotations.*;
