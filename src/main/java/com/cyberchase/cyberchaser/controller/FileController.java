@@ -17,19 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class FileController {
-
-    @Autowired
-    AWSConfig awsConfig;
-
     @RequestMapping(value = "/aws", method = RequestMethod.POST)
     public ResponseEntity<String> aesEncryption(@RequestBody AWSPayload payload) {
-        AWSService.uploadString(payload.getFileName(), payload.getContents().getBytes(), awsConfig.getRegion());
+        AWSService.uploadString(payload.getFileName(), payload.getContents().getBytes());
         return new ResponseEntity<String>(String.format("File %s uploaded", payload.getFileName()), HttpStatus.OK);
-    }
-
-    @PostConstruct
-    public void initialise() {
-        System.setProperty("aws.accessKeyId", awsConfig.getAccessKey());
-        System.setProperty("aws.secretKey", awsConfig.getSecretKey());
     }
 }
