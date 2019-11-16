@@ -8,8 +8,11 @@ To execute locally:
 1. Make sure port 8080 is available. Open the project in an editor or IDE. (If maven dependencies are not loading, make sure the pom.xml is registered as a maven project file.)
 2. Through the IDE/Editor's built in terminal, execute the commands below.
 3. For Mac users: After installing maven locally using $ brew install maven, execute
+  
   $ mvn spring-boot:run
+  
    For PC users: execute
+   
   $ ./mvnw.cmd spring-boot:run
 4. Enter http://localhost:8080/swagger-ui.html# into your browser.
 5. Use the various encryption/decryption controller functions and hashing functions to encrypt/decrypt text and use the various file manipulation methods to upload/download files from the cloud.
